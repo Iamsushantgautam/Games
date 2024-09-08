@@ -1,0 +1,116 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  color: #333;
+}
+
+h1 {
+  color: #222;
+  margin-bottom: 20px;
+  font-size: 2.5em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Game Board Styles */
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 8px;
+  margin: 20px 0;
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  border-radius: 8px;
+}
+
+.cell:hover {
+  background: #e9ecef;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+button {
+  padding: 12px 24px;
+  font-size: 1.1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0056b3, #004080);
+  transform: scale(1.05);
+}
+
+button:active {
+  background: linear-gradient(135deg, #004080, #003366);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Restart Button Styles */
+#restart {
+  background: linear-gradient(135deg, #28a745, #218838);
+}
+
+#restart:hover {
+  background: linear-gradient(135deg, #218838, #1e7e34);
+}
+
+#restart:active {
+  background: linear-gradient(135deg, #1e7e34, #1b5e20);
+}
+
+/* Mode Buttons Styles */
+#mode1 {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+#mode2 {
+  background: linear-gradient(135deg, #ffc107, #e0a800);
+}
+
+/* Selected Mode Styles */
+.selected-mode {
+  font-size: 1.2em;
+  font-weight: bold;
+  border: 2px solid #343a40;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+#mode1.selected-mode {
+  background: #138496;
+  color: #ffffff;
+}
+
+#mode2.selected-mode {
+  background: #e0a800;
+  color: #333;
+}
