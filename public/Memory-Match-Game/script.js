@@ -1,6 +1,7 @@
 const board = document.getElementById('game-board');
 const movesCounter = document.getElementById('moves');
 const restartBtn = document.getElementById('restart-btn');
+const startBtn = document.getElementById('start-btn');
 
 let moves = 0;
 let firstCard = null;
@@ -11,7 +12,7 @@ let cardElements = [];
 const emojis = ['🍕','🍔','🍟','🌮','🍣','🍩','🍪','🍦'];
 
 function initializeGame() {
-  board.innerHTML = ''; // Clear board
+  board.innerHTML = '';
   moves = 0;
   movesCounter.innerText = `Moves: ${moves}`;
   firstCard = null;
@@ -30,7 +31,6 @@ function initializeGame() {
     cardElements.push(card);
   });
 
-  // Reveal for 2 seconds, then hide
   setTimeout(() => {
     cardElements.forEach(card => {
       card.innerText = '';
@@ -79,7 +79,12 @@ function resetBoard() {
   [firstCard, secondCard, lockBoard] = [null, null, false];
 }
 
+// Button events
 restartBtn.addEventListener('click', initializeGame);
 
-// Start the game initially
-initializeGame();
+startBtn.addEventListener('click', () => {
+  startBtn.style.display = 'none';
+  board.style.display = 'grid';
+  restartBtn.style.display = 'inline-block';
+  initializeGame();
+});

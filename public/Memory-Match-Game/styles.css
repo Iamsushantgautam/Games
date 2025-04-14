@@ -78,7 +78,7 @@ body {
   }
 }
 
-#restart-btn {
+#restart-btn,#start-btn { 
   margin: 15px 0;
   padding: 12px 24px;
   font-size: 1.1rem;
