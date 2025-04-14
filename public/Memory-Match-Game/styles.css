@@ -94,3 +94,25 @@ body {
   background-color: #45a049;
   transform: scale(1.05);
 }
+
+
+@media (max-width: 500px) {
+  .board {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 10px;
+    max-width: 95%;
+  }
+
+  .card {
+    font-size: 1.8rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  #restart-btn {
+    font-size: 1rem;
+    padding: 10px 18px;
+  }
+}
