@@ -21,6 +21,11 @@ app.get('/Tic-Tac-Toe', (req, res) => {
   res.render('Tic-Tac-Toe/ttt'); // views/Tic-Tac-Toe/ttt.ejs
 });
 
+// Tic Tac Toe Page
+app.get('/Memory-Match-Game', (req, res) => {
+  res.render('Memory-Match-Game/mm'); // views/Tic-Tac-Toe/ttt.ejs
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
