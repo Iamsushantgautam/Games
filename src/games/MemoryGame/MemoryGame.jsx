@@ -1,3 +1,4 @@
+import './MemoryGame.css';
 import React, { useState, useEffect } from "react";
 
 const EMOJIS = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼"];

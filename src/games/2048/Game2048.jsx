@@ -1,3 +1,4 @@
+import './Game2048.css';
 import React, { useState, useEffect, useRef } from "react";
 
 export default function Game2048() {

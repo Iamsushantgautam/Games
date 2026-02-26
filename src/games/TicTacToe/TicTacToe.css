@@ -1,0 +1,42 @@
+/* ============================
+   TIC TAC TOE
+   ============================ */
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: min(340px, 100%);
+  background: var(--border);
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.ttt-square {
+  background: var(--panel);
+  aspect-ratio: 1;
+  font-size: 3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  border: none;
+  box-shadow: var(--shadow-xs);
+}
+
+.ttt-square:hover {
+  background: var(--accent-light);
+  transform: scale(0.96);
+}
+
+.ttt-square.x {
+  color: var(--accent);
+}
+
+.ttt-square.o {
+  color: #0ea5e9;
+}

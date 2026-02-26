@@ -1,88 +1,127 @@
 # 🎮 Wit Games Portal
 
-Wit Games is a unified, responsive web portal built with React and Vite. It serves a collection of 10 classic browser games with a modern, beautiful UI and seamless mobile touch/swipe support.
+A unified, responsive web portal built with **React + Vite** — a collection of polished browser games with a modern UI, custom thumbnails, and seamless mobile touch support.
+
+🌐 **Live Demo old**: [https://shkgames.onrender.com/](https://shkgames.onrender.com/)
+
+🌐 **Live Demo new**: [https://wit-games.vercel.app/](https://wit-games.vercel.app/)
+
+---
 
 ## 🚀 Technologies Used
-- **Frontend**: React.js, React Router DOM v6
-- **Styling**: Vanilla CSS (CSS Variables, Flexbox/Grid, Animations)
-- **Icons**: Lucide React
-- **Build Tool**: Vite
-- **Deployment**: Vercel (Client-side routing enabled via `vercel.json`)
+
+| Tech | Purpose |
+|------|---------|
+| **React.js** | UI component framework |
+| **React Router DOM v6** | Client-side routing |
+| **Vanilla CSS** | Styling (CSS Variables, Flexbox, Grid, Animations) |
+| **Lucide React** | Icons |
+| **Vite** | Build tool & dev server |
+| **Render** | Deployment |
 
 ---
 
-## 🕹️ The Games & How They Work
+## 🕹️ Games Included
 
-Each game is encapsulated in its own component within `src/games/`. The state is managed locally via React's `useState` and loops/timers are maintained via `useEffect`.
+Each game lives in its own folder under `src/games/` — with a dedicated `<GameName>.jsx` and `<GameName>.css` file.
 
 ### 1. ❌⭕ Tic Tac Toe
-**How it works**: A classic 2-player game where X and O take turns trying to align 3 symbols. 
-**Core Functions**:
-- `calculateWinner(squares)`: Checks 8 possible winning combinations (rows, columns, diagonals).
-- `handleClick(index)`: Updates the board array at the clicked index and toggles the `isXNext` boolean state if the square is empty and nobody has won yet.
+A classic 2-player strategy game. Supports **Two Player** and **Play vs Computer** modes.
+- `calculateWinner()` — checks all 8 winning combos (rows, cols, diagonals)
+- `handleClick()` — places symbol, toggles turn
+- Computer picks randomly from empty squares with a 500ms delay
 
 ### 2. 🧠 Memory
-**How it works**: A card-matching game where players flip two cards to find matching emojis.
-**Core Functions**:
-- `startNewGame()`: Duplicates the emoji array, shuffles it using `Math.random()`, and maps it to an array of objects with unique IDs to reset the board.
-- `handleCardClick(index)`: Pushes the clicked index to a `flipped` array. If two cards are flipped, it compares them. If they match, they are pushed to the `matched` array. It handles auto-flipping back un-matched cards with a `setTimeout()`.
+Flip and match pairs of emoji cards from a shuffled board.
+- `startNewGame()` — shuffles and duplicates emoji array
+- `handleCardClick()` — manages flipped/matched state with auto-reset via `setTimeout`
 
 ### 3. 🐍 Snake
-**How it works**: Guide the snake to eat food and grow, without hitting the walls or itself.
-**Core Functions**:
-- `useEffect` loop (150ms): Calculates the snake's new head position based on the current `dir` (direction coordinates `[dx, dy]`). Checks for wall / self-collision (`setGameOver`). Appends the new head to the snake array and pops the tail unles food was eaten.
-- `handleKeyDown()` / `handleTouchEnd()`: Maps Arrow Keys or mobile Swipe gestures (calculating delta X/Y distance) to update the `dir` array immediately without allowing 180-degree reversals.
+Guide the snake to eat food and grow. Supports **Easy / Medium / Hard** difficulty.
+- Speed: Easy = 200ms, Medium = 120ms, Hard = 70ms per tick
+- `useEffect` loop handles movement, collision, and food spawning
+- Full swipe (mobile) + arrow key (desktop) support
 
-### 4. ✌️ Rock Paper Scissors (RPS)
-**How it works**: A quick battle against a randomized CPU choice.
-**Core Functions**:
-- `play(choice)`: Uses `Math.floor(Math.random() * 3)` to select a CPU choice. Then executes a simple string-comparison tree (e.g. `Rock beats Scissors`) to determine and set the winner string (`setResult`).
+### 4. ✌️ Rock Paper Scissors (RPS)  
+Battle against the CPU or in **Two Player** mode with Win/Loss tracking.
+- `determineWinner()` — compares two choices
+- **PvC**: Instant result vs random CPU pick
+- **PvP**: Turn-based, Player 1 picks first, hidden, then Player 2 picks
+- Live scoreboard shows wins and losses
 
 ### 5. 🔨 Whack a Mole
-**How it works**: Click/tap the moles quickly before they disappear to score points.
-**Core Functions**:
-- `useEffect` timer loop: Operates only when `playing === true`. Triggers a random `timeout` interval between 400ms-1200ms to set a random `activeHole` from 0-8. Simultaneously ticks down `timeLeft`.
-- `whack(idx)`: Verifies if the clicked index is the current `activeHole`. If so, increments the score and pushes the index to a `whackedHoles` array to trigger a CSS visual spin/disappear animation.
+Tap/click moles as they pop up before the timer runs out.
+- Random mole appears every 400–1200ms while `playing === true`
+- `whack(idx)` — scores and triggers disappear animation
 
-### 6. 🎨 Simon Says
-**How it works**: Repeat the increasingly long color sequence generated by the CPU.
-**Core Functions**:
-- `nextRound()`: Appends one random color string to the `sequence` array and calls `playSequence()`.
-- `playSequence(seq)`: Loops over the sequence array, triggering staggered `setTimeout` calls to briefly set the `activeColor` visually to highlight the sequence for the player.
-- `handleInput(color)`: Intercepts the player's button taps. It compares the tapped color against the main `sequence` based on the length of current inputs. Any mismatch triggers `Game Over`.
+### 6. 🔢 2048
+Slide numbered tiles to merge and reach the 2048 tile.
+- `slide(row)` — core engine: compacts tiles, merges equals, pads with zeros
+- `move(direction)` — maps swipe/arrow to column/row operations
+- Swipe (mobile) + arrow key (desktop) support
 
-### 7. 🔴🟡 Connect Four
-**How it works**: Drop colored discs into a 6x7 vertical grid. The first to connect 4 in any direction wins.
-**Core Functions**:
-- `handleClick(col)`: Since pieces fall downwards, it loops from the bottom row (ROWS - 1) upwards, filling the first empty `[row][col]` slot found in the 2D array state with the `currentPlayer` string. 
-- `checkWin(board)`: A deeply nested but efficient loop that checks all 4 possible connection directions (horizontal, vertical, downright, upright) for 4 identical contiguous strings.
-
-### 8. 🔤 Hangman
-**How it works**: Guess a hidden word letter by letter within 6 mistakes.
-**Core Functions**:
-- `guess(letter)`: Adds the clicked letter to a `Set` object of guessed letters using `setGuessed(new Set(guessed).add(letter))`. If the target word string doesn't include the letter, it increments the `mistakes` ticker.
-- Evaluators: Derives win/loss entirely through render-time booleans: `isWin = word.split("").every(l => guessed.has(l))` and `isLoss = mistakes >= MAX_MISTAKES`.
-
-### 9. 🔢 2048
-**How it works**: Slide numbered tiles on a 4x4 grid. Tiles with the same number merge into one when they touch.
-**Core Functions**:
-- `slide(row)`: The core mathematical engine. It pulls all non-zero numbers into a temporary array, loops through to identify adjacent matching numbers, multiplies them, increments the score, and pushes back trailing zeros to retain a length of 4.
-- `move(direction)`: Maps the directional input (up/down/left/right) into arrays of 1D rows or columns, passes them through the `slide()` engine (sometimes reversing them beforehand for right/down moves), maps them back to the 2D matrix, and finally calls `addRandom()` if the matrix actually changed.
-- `handleTouchEnd()`: Adds pure swipe support to this logic by calculating `clientX / clientY` deltas.
-
-### 10. 🏓 Pong
-**How it works**: Keep the bouncing ball from entering your side using a vertical paddle. Currently behaves as an endless rally against a wall-paddle. 
-**Core Functions**:
-- `useEffect` continuous physics loop (run every 16ms to simulate ~60fps): Continuously updates the `ball` object (`x`, `y`, `dx`, `dy`). Checks limits against top/bottom walls (reversing `dy`) and checks `x/y` intersections against `paddle1` and `paddle2` boundaries to deflect `dx`.
-- `handleMouseMove` / `handleTouchMove`: Extremely snappy paddle control syncing the paddle's Y axis exactly to `e.clientY` (adjusted for the `<canvas>`/`div` bounding rectangle offset).
+### 7. 🎲 Ludo
+A 4-player classic board game rendered on a 15×15 CSS grid.
+- Turn-based dice roll (1–6), unlock tokens on 6
+- Token paths mapped per player via coordinate arrays
+- Kill mechanic — captures opponent tokens off non-safe squares ⭐
+- Safe squares prevent captures on special positions
+- Animated tokens bounce when it's your turn
 
 ---
 
-## 🎨 Global UI Systems
-- **Fullscreen API**: In `App.jsx`, the `<GameWrapper>` component handles fullscreen requests enabling an immersive, distraction-free environment.
-- **Scroll Locking**: The root `index.css` permanently prevents elastic scrolling (`overscroll-behavior: none;`) and text highlighting (`user-select: none;`), enabling perfect game controls without zooming the browser.
+## 📁 Project Structure
+
+```
+src/
+├── App.jsx                    # Main router & game portal
+├── index.css                  # Global shared styles only
+├── assets/
+│   └── thumbnails/            # AI-generated game card images
+└── games/
+    ├── TicTacToe/
+    │   ├── TicTacToe.jsx
+    │   └── TicTacToe.css
+    ├── MemoryGame/
+    │   ├── MemoryGame.jsx
+    │   └── MemoryGame.css
+    ├── Snake/
+    │   ├── Snake.jsx
+    │   └── Snake.css
+    ├── RockPaperScissors/
+    │   ├── RockPaperScissors.jsx
+    │   └── RockPaperScissors.css
+    ├── WhackAMole/
+    │   ├── WhackAMole.jsx
+    │   └── WhackAMole.css
+    ├── 2048/
+    │   ├── Game2048.jsx
+    │   └── Game2048.css
+    └── Ludo/
+        ├── Ludo.jsx
+        └── Ludo.css
+```
+
+---
+
+## 🎨 Global UI Features
+
+- **Custom Thumbnails** — Each game has an AI-generated thumbnail shown on the portal grid
+- **Fullscreen API** — Every game supports a full-screen immersive mode via the topbar
+- **Scroll Locking** — `overscroll-behavior: none` + `user-select: none` prevents browser interference during gameplay
+- **Responsive Grid** — Portal adapts from 5 columns (desktop) down to 2 (mobile)
+- **Micro-animations** — Hover effects, pop-in reveals, bounce animations throughout
+
+---
 
 ## 🛠️ Run Locally
-1. `npm install`
-2. `npm run dev`
-3. Open `http://localhost:5173`
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173)
+
+---
+

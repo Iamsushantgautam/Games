@@ -1,3 +1,4 @@
+import './Snake.css';
 import React, { useState, useEffect, useRef } from "react";
 
 const BOARD_SIZE = 20;
@@ -8,7 +9,14 @@ export default function SnakeGame() {
     const [dir, setDir] = useState([0, -1]);
     const [gameOver, setGameOver] = useState(false);
     const [touchStart, setTouchStart] = useState(null);
+    const [difficulty, setDifficulty] = useState("medium");
     const boardRef = useRef(null);
+
+    const speeds = {
+        easy: 200,
+        medium: 120,
+        hard: 70
+    };
 
     useEffect(() => {
         boardRef.current?.focus();
@@ -29,11 +37,15 @@ export default function SnakeGame() {
                 }
                 return newSnake;
             });
-        }, 150);
+        }, speeds[difficulty]);
         return () => clearInterval(interval);
-    }, [dir, gameOver, food]);
+    }, [dir, gameOver, food, difficulty]);
 
     const handleKeyDown = (e) => {
+        // Prevent default scrolling when playing
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+            e.preventDefault();
+        }
         if (gameOver) return;
         switch (e.key) {
             case "ArrowUp": if (dir[1] !== 1) setDir([0, -1]); break;
@@ -65,15 +77,34 @@ export default function SnakeGame() {
         setTouchStart(null);
     };
 
+    const resetGame = () => {
+        setGameOver(false);
+        setSnake([[10, 10]]);
+        setDir([0, -1]);
+        boardRef.current?.focus();
+    };
+
     return (
         <>
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center", marginBottom: "15px", flexWrap: "wrap" }}>
+                {["easy", "medium", "hard"].map(level => (
+                    <button
+                        key={level}
+                        className={`btn ${difficulty === level ? "" : "btn-outline"}`}
+                        onClick={() => { setDifficulty(level); resetGame(); }}
+                    >
+                        {level.charAt(0).toUpperCase() + level.slice(1)}
+                    </button>
+                ))}
+            </div>
+
             <div className="status-bar">
                 <div className={`status-pill ${gameOver ? "accent" : ""}`}>
                     {gameOver ? "Game Over! " : ""}Score: {snake.length - 1}
                 </div>
             </div>
 
-            <div className="swipe-hint"><span>👆</span> Swipe to Move</div>
+            <div className="swipe-hint"><span>👆</span> Swipe or Arrow Keys to Move</div>
 
             <div
                 className="snake-board-container"
@@ -103,7 +134,7 @@ export default function SnakeGame() {
                 </div>
             </div>
 
-            {gameOver && <button className="btn" onClick={() => { setGameOver(false); setSnake([[10, 10]]); setDir([0, -1]); boardRef.current?.focus(); }}>Play Again</button>}
+            {gameOver && <button className="btn" style={{ marginTop: "20px" }} onClick={resetGame}>Play Again</button>}
         </>
     );
 }

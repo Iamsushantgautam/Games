@@ -3,28 +3,30 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Maximize, Minimize } from "lucide-react";
 import "./index.css";
 
-import TicTacToe from "./games/TicTacToe";
-import MemoryGame from "./games/MemoryGame";
-import SnakeGame from "./games/Snake";
-import RockPaperScissors from "./games/RockPaperScissors";
-import WhackAMole from "./games/WhackAMole";
-import Simon from "./games/Simon";
-import ConnectFour from "./games/ConnectFour";
-import Hangman from "./games/Hangman";
-import Game2048 from "./games/2048";
-import Pong from "./games/Pong";
+import TicTacToe from "./games/TicTacToe/TicTacToe";
+import MemoryGame from "./games/MemoryGame/MemoryGame";
+import SnakeGame from "./games/Snake/Snake";
+import RockPaperScissors from "./games/RockPaperScissors/RockPaperScissors";
+import WhackAMole from "./games/WhackAMole/WhackAMole";
+import Game2048 from "./games/2048/Game2048";
+import Ludo from "./games/Ludo/Ludo";
+
+import ticTacToeImg from "./assets/thumbnails/tictactoe.png";
+import memoryImg from "./assets/thumbnails/memory.png";
+import snakeImg from "./assets/thumbnails/snake.png";
+import rpsImg from "./assets/thumbnails/rps.png";
+import whackamoleImg from "./assets/thumbnails/whackamole.png";
+import game2048Img from "./assets/thumbnails/2048.png";
+import ludoImg from "./assets/thumbnails/ludo.png";
 
 const GAMES = [
-  { id: "tictactoe", name: "Tic Tac Toe", emoji: "❌⭕", component: TicTacToe },
-  { id: "memory", name: "Memory", emoji: "🧠", component: MemoryGame },
-  { id: "snake", name: "Snake", emoji: "🐍", component: SnakeGame },
-  { id: "rps", name: "RPS", emoji: "✌️", component: RockPaperScissors },
-  { id: "whackamole", name: "Whack a Mole", emoji: "🔨", component: WhackAMole },
-  { id: "simon", name: "Simon Says", emoji: "🎨", component: Simon },
-  { id: "connect4", name: "Connect Four", emoji: "🔴🟡", component: ConnectFour },
-  { id: "hangman", name: "Hangman", emoji: "🔤", component: Hangman },
-  { id: "2048", name: "2048", emoji: "🔢", component: Game2048 },
-  { id: "pong", name: "Pong", emoji: "🏓", component: Pong },
+  { id: "tictactoe", name: "Tic Tac Toe", image: ticTacToeImg, component: TicTacToe },
+  { id: "memory", name: "Memory", image: memoryImg, component: MemoryGame },
+  { id: "snake", name: "Snake", image: snakeImg, component: SnakeGame },
+  { id: "rps", name: "RPS", image: rpsImg, component: RockPaperScissors },
+  { id: "whackamole", name: "Whack a Mole", image: whackamoleImg, component: WhackAMole },
+  { id: "2048", name: "2048", image: game2048Img, component: Game2048 },
+  { id: "ludo", name: "Ludo", image: ludoImg, component: Ludo },
 ];
 
 function Home() {
@@ -47,7 +49,9 @@ function Home() {
       <div className="games-grid">
         {GAMES.map((game) => (
           <Link key={game.id} to={`/${game.id}`} className="game-card">
-            <div className="game-card-emoji">{game.emoji}</div>
+            <div className="game-card-image-wrapper">
+              <img src={game.image} alt={game.name} className="game-card-image" />
+            </div>
             <h3>{game.name}</h3>
           </Link>
         ))}
@@ -85,7 +89,7 @@ function GameWrapper({ game }) {
     <div className="game-wrapper">
       <div className="game-topbar">
         <Link to="/" className="topbar-btn">← Portal</Link>
-        <span className="game-topbar-title">{game.emoji} {game.name}</span>
+        <span className="game-topbar-title">{game.name}</span>
         <button className="topbar-btn" onClick={toggleFullscreen}>
           {isFullscreen ? <><Minimize size={16} /> Exit</> : <><Maximize size={16} /> Full Screen</>}
         </button>

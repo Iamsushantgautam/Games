@@ -1,0 +1,73 @@
+/* ============================
+   2048
+   ============================ */
+.game-2048-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  background: #bbada0;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  width: min(340px, 100%);
+  margin: 1rem auto;
+  box-shadow: var(--shadow-lg);
+  touch-action: none;
+}
+
+.game-2048-cell {
+  aspect-ratio: 1;
+  background: rgba(238, 228, 218, 0.35);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #776e65;
+  transition: all 0.15s ease-in-out;
+  font-family: 'DM Mono', monospace;
+}
+
+.game-2048-cell[data-val="2"] {
+  background: #eee4da;
+  box-shadow: 0 0 10px rgba(238, 228, 218, 0.5);
+}
+
+.game-2048-cell[data-val="4"] {
+  background: #ede0c8;
+  box-shadow: 0 0 10px rgba(237, 224, 200, 0.5);
+}
+
+.game-2048-cell[data-val="8"] {
+  background: #f2b179;
+  color: #f9f6f2;
+  box-shadow: 0 0 10px rgba(242, 177, 121, 0.5);
+}
+
+.game-2048-cell[data-val="16"] {
+  background: #f59563;
+  color: #f9f6f2;
+  box-shadow: 0 0 10px rgba(245, 149, 99, 0.5);
+}
+
+.game-2048-cell[data-val="32"] {
+  background: #f67c5f;
+  color: #f9f6f2;
+  box-shadow: 0 0 10px rgba(246, 124, 95, 0.5);
+}
+
+.game-2048-cell[data-val="64"] {
+  background: #f65e3b;
+  color: #f9f6f2;
+}
+
+.game-2048-cell[data-val="128"],
+.game-2048-cell[data-val="256"],
+.game-2048-cell[data-val="512"],
+.game-2048-cell[data-val="1024"],
+.game-2048-cell[data-val="2048"] {
+  background: #edcf72;
+  color: #f9f6f2;
+  font-size: 1.5rem;
+  box-shadow: 0 0 20px rgba(237, 207, 114, 0.6);
+}

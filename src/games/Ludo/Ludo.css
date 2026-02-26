@@ -1,0 +1,175 @@
+/* ============================
+   LUDO
+   ============================ */
+:root {
+    --ludo-red: #ef4444;
+    --ludo-red-dark: #b91c1c;
+    --ludo-green: #22c55e;
+    --ludo-green-dark: #15803d;
+    --ludo-yellow: #eab308;
+    --ludo-yellow-dark: #a16207;
+    --ludo-blue: #3b82f6;
+    --ludo-blue-dark: #1d4ed8;
+}
+
+.ludo-container {
+    width: min(100%, 500px);
+    aspect-ratio: 1;
+    background: white;
+    border: 4px solid var(--text);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    box-shadow: var(--shadow-xl);
+}
+
+.ludo-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: calc(100% / 15) calc(100% / 15);
+    position: relative;
+}
+
+.ludo-base {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10%;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.base-red {
+    background: var(--ludo-red);
+}
+
+.base-green {
+    background: var(--ludo-green);
+}
+
+.base-yellow {
+    background: var(--ludo-yellow);
+}
+
+.base-blue {
+    background: var(--ludo-blue);
+}
+
+.base-inner {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ludo-center {
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.center-tri {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.red-tri {
+    background: var(--ludo-red);
+    clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+}
+
+.green-tri {
+    background: var(--ludo-green);
+    clip-path: polygon(0 0, 50% 50%, 0 100%);
+}
+
+.yellow-tri {
+    background: var(--ludo-yellow);
+    clip-path: polygon(0 0, 100% 0, 50% 50%);
+}
+
+.blue-tri {
+    background: var(--ludo-blue);
+    clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+}
+
+.ludo-token {
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    place-self: center;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    z-index: 5;
+}
+
+.ludo-token:active {
+    transform: scale(0.9) !important;
+}
+
+.ludo-token.active {
+    animation: ludo-bounce 1s infinite alternate;
+    box-shadow: 0 0 18px currentColor;
+}
+
+@keyframes ludo-bounce {
+    0% {
+        transform: translateY(0) scale(1.1);
+    }
+
+    100% {
+        transform: translateY(-8px) scale(1.15);
+    }
+}
+
+.t-red {
+    background: var(--ludo-red);
+    color: var(--ludo-red);
+}
+
+.t-green {
+    background: var(--ludo-green);
+    color: var(--ludo-green);
+}
+
+.t-yellow {
+    background: var(--ludo-yellow);
+    color: var(--ludo-yellow);
+}
+
+.t-blue {
+    background: var(--ludo-blue);
+    color: var(--ludo-blue);
+}
+
+.status-pill.red {
+    background: #fee2e2;
+    color: var(--ludo-red-dark);
+    border-color: var(--ludo-red);
+}
+
+.status-pill.green {
+    background: #dcfce7;
+    color: var(--ludo-green-dark);
+    border-color: var(--ludo-green);
+}
+
+.status-pill.yellow {
+    background: #fef9c3;
+    color: var(--ludo-yellow-dark);
+    border-color: var(--ludo-yellow);
+}
+
+.status-pill.blue {
+    background: #dbeafe;
+    color: var(--ludo-blue-dark);
+    border-color: var(--ludo-blue);
+}

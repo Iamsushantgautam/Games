@@ -1,3 +1,4 @@
+import './WhackAMole.css';
 import React, { useState, useEffect } from "react";
 
 export default function WhackAMole() {
