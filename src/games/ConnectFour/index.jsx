@@ -43,14 +43,13 @@ export default function ConnectFour() {
     };
 
     return (
-        <div className="center">
-            <h2>{winner ? `${winner} Wins! 🎉` : `Current turn: ${currentPlayer}`}</h2>
-            <button className="btn" onClick={() => {
-                setBoard(Array(ROWS).fill(null).map(() => Array(COLS).fill(null)));
-                setWinner(null);
-                setCurrentPlayer("Red");
-            }} style={{ marginBottom: "1rem" }}>Restart</button>
-            <br />
+        <>
+            <div className="status-bar">
+                <div className={`status-pill ${winner ? "accent" : ""}`}>
+                    {winner ? `${winner} Wins! 🎉` : `Current turn: ${currentPlayer}`}
+                </div>
+            </div>
+
             <div className="c4-board">
                 {board.map((row, rIdx) => (
                     <div key={rIdx} className="c4-row">
@@ -64,6 +63,12 @@ export default function ConnectFour() {
                     </div>
                 ))}
             </div>
-        </div>
+
+            <button className="btn" onClick={() => {
+                setBoard(Array(ROWS).fill(null).map(() => Array(COLS).fill(null)));
+                setWinner(null);
+                setCurrentPlayer("Red");
+            }}>Restart Game</button>
+        </>
     );
 }

@@ -27,16 +27,22 @@ export default function TicTacToe() {
     };
 
     return (
-        <div className="center">
-            <h2 style={{ marginBottom: "1rem" }}>{winner ? `Winner: ${winner}` : `Next Player: ${isXNext ? "X" : "O"}`}</h2>
+        <>
+            <div className="status-bar">
+                <div className={`status-pill ${winner ? "accent" : ""}`}>
+                    {winner ? `Winner: ${winner}` : `Turn: ${isXNext ? "X" : "O"}`}
+                </div>
+            </div>
+
             <div className="ttt-board">
                 {board.map((cell, index) => (
-                    <div key={index} className="ttt-square" onClick={() => handleClick(index)}>
+                    <button key={index} className={`ttt-square ${cell === "X" ? "x" : cell === "O" ? "o" : ""}`} onClick={() => handleClick(index)}>
                         {cell}
-                    </div>
+                    </button>
                 ))}
             </div>
-            <button className="btn" onClick={() => { setBoard(Array(9).fill(null)); setIsXNext(true); }}>Restart</button>
-        </div>
+
+            <button className="btn" onClick={() => { setBoard(Array(9).fill(null)); setIsXNext(true); }}>Restart Game</button>
+        </>
     );
 }

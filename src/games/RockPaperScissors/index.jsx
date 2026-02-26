@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const CHOICES = ["✊", "✋", "✌️"];
 
@@ -22,19 +22,34 @@ export default function RockPaperScissors() {
     };
 
     return (
-        <div className="center">
-            <h2>Choose your weapon:</h2>
+        <>
+            <div className="status-bar">
+                <div className="status-pill">
+                    {result ? result : "Choose your weapon"}
+                </div>
+            </div>
+
             <div className="rps-options">
                 {CHOICES.map(c => (
                     <button key={c} className="rps-btn" onClick={() => play(c)}>{c}</button>
                 ))}
             </div>
+
             {playerChoice && (
-                <div>
-                    <h3>You: <span style={{ fontSize: "2rem" }}>{playerChoice}</span> vs CPU: <span style={{ fontSize: "2rem" }}>{compChoice}</span></h3>
-                    <h2 style={{ color: "var(--accent)", marginTop: "1rem" }}>{result}</h2>
+                <div className="rps-results">
+                    <div className="rps-battle">
+                        <div className="rps-player">
+                            <small>You</small>
+                            <span>{playerChoice}</span>
+                        </div>
+                        <span style={{ fontSize: "1.5rem", fontWeight: "700", color: "var(--text-muted)" }}>VS</span>
+                        <div className="rps-player">
+                            <small>CPU</small>
+                            <span>{compChoice}</span>
+                        </div>
+                    </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }

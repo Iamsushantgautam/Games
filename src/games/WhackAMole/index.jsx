@@ -5,6 +5,7 @@ export default function WhackAMole() {
     const [score, setScore] = useState(0);
     const [timeLeft, setTimeLeft] = useState(30);
     const [playing, setPlaying] = useState(false);
+    const [whackedHoles, setWhackedHoles] = useState([]);
 
     useEffect(() => {
         if (playing && timeLeft > 0) {
@@ -23,7 +24,11 @@ export default function WhackAMole() {
     const whack = (idx) => {
         if (idx === activeHole) {
             setScore(s => s + 1);
+            setWhackedHoles(prev => [...prev, idx]);
             setActiveHole(null);
+            setTimeout(() => {
+                setWhackedHoles(prev => prev.filter(h => h !== idx));
+            }, 300);
         }
     };
 
@@ -34,18 +39,27 @@ export default function WhackAMole() {
     };
 
     return (
-        <div className="center">
-            <h2>Score: {score} | Time: {timeLeft}s</h2>
-            <button className="btn" onClick={start} disabled={playing}>
-                {timeLeft === 0 ? "Play Again" : "Start Game"}
-            </button>
-            <div className="mole-board" style={{ marginTop: "2rem" }}>
+        <>
+            <div className="status-bar">
+                <div className="status-pill">Score: {score}</div>
+                <div className={`status-pill ${timeLeft <= 5 && timeLeft > 0 ? "accent" : ""}`}>
+                    Time: {timeLeft}s
+                </div>
+            </div>
+
+            <div className="mole-board">
                 {Array.from({ length: 9 }).map((_, i) => (
                     <div key={i} className="mole-hole" onClick={() => whack(i)}>
-                        <div className={`mole ${activeHole === i ? "up" : ""}`}>🐹</div>
+                        <div className={`mole ${activeHole === i ? "up" : ""} ${whackedHoles.includes(i) ? "whacked" : ""}`}>
+                            {whackedHoles.includes(i) ? "💫" : "🐹"}
+                        </div>
                     </div>
                 ))}
             </div>
-        </div>
+
+            <button className="btn" onClick={start} disabled={playing}>
+                {timeLeft === 0 ? "Play Again" : "Start Game"}
+            </button>
+        </>
     );
 }

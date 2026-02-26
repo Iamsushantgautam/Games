@@ -6,6 +6,7 @@ export default function MemoryGame() {
     const [cards, setCards] = useState([]);
     const [flipped, setFlipped] = useState([]);
     const [matched, setMatched] = useState([]);
+    const isWon = matched.length === EMOJIS.length * 2;
 
     useEffect(() => {
         startNewGame();
@@ -29,30 +30,43 @@ export default function MemoryGame() {
         if (newFlipped.length === 2) {
             const [first, second] = newFlipped;
             if (cards[first].emoji === cards[second].emoji) {
-                setMatched([...matched, first, second]);
+                setMatched(prev => [...prev, first, second]);
             }
-            setTimeout(() => setFlipped([]), 1000);
+            setTimeout(() => setFlipped([]), 800);
         }
     };
 
     return (
-        <div className="center">
-            <h2 style={{ marginBottom: "1rem" }}>Matches: {matched.length / 2} / {EMOJIS.length}</h2>
+        <>
+            <div className="status-bar">
+                <div className={`status-pill ${isWon ? "accent" : ""}`}>
+                    {isWon ? "You Won! 🎉" : `Matches: ${matched.length / 2} / ${EMOJIS.length}`}
+                </div>
+            </div>
+
             <div className="memory-board">
                 {cards.map((card, idx) => {
-                    const isVisible = flipped.includes(idx) || matched.includes(idx);
+                    const isFlipped = flipped.includes(idx);
+                    const isMatched = matched.includes(idx);
+                    const isVisible = isFlipped || isMatched;
+
+                    let cardClass = "memory-card";
+                    if (!isVisible) cardClass += " hidden";
+                    if (isMatched) cardClass += " matched";
+
                     return (
                         <div
                             key={card.id}
-                            className={`memory-card ${isVisible ? "" : "hidden"}`}
+                            className={cardClass}
                             onClick={() => handleCardClick(idx)}
                         >
-                            {isVisible ? card.emoji : "?"}
+                            {isVisible ? card.emoji : null}
                         </div>
                     );
                 })}
             </div>
-            <button className="btn" onClick={startNewGame}>Restart</button>
-        </div>
+
+            <button className="btn" onClick={startNewGame}>Restart Game</button>
+        </>
     );
 }

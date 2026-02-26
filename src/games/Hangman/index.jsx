@@ -20,20 +20,22 @@ export default function Hangman() {
     const isLoss = mistakes >= MAX_MISTAKES;
 
     return (
-        <div className="center">
-            <h2>Mistakes: {mistakes} / {MAX_MISTAKES}</h2>
-            <div className="hangman-text">
-                {word.split("").map((l, i) => (guessed.has(l) || isLoss ? l : "_")).join(" ")}
+        <>
+            <div className="status-bar">
+                <div className={`status-pill ${(isWin || isLoss) ? "accent" : ""}`}>
+                    {isWin ? "You Won! 🎉" : isLoss ? "Game Over! 😢" : `Mistakes: ${mistakes} / ${MAX_MISTAKES}`}
+                </div>
             </div>
-            <div>
-                <h3>{isWin ? "You Won! 🎉" : isLoss ? "Game Over! 😢" : "Keep guessing!"}</h3>
-                <button className="btn" onClick={() => {
-                    setWord(WORDS[Math.floor(Math.random() * WORDS.length)]);
-                    setGuessed(new Set());
-                    setMistakes(0);
-                }}>Play Again</button>
+
+            <div className="hangman-word">
+                {word.split("").map((l, i) => (
+                    <div key={i} className="hangman-letter">
+                        {guessed.has(l) || isLoss ? l : ""}
+                    </div>
+                ))}
             </div>
-            <div className="hangman-keys" style={{ marginTop: "2rem" }}>
+
+            <div className="hangman-keyboard">
                 {ALPHABET.map(l => (
                     <button
                         key={l}
@@ -45,6 +47,14 @@ export default function Hangman() {
                     </button>
                 ))}
             </div>
-        </div>
+
+            {(isWin || isLoss) && (
+                <button className="btn" style={{ marginTop: "1rem" }} onClick={() => {
+                    setWord(WORDS[Math.floor(Math.random() * WORDS.length)]);
+                    setGuessed(new Set());
+                    setMistakes(0);
+                }}>Play Again</button>
+            )}
+        </>
     );
 }
